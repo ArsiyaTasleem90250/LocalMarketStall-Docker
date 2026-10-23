@@ -1,0 +1,51 @@
+
+services:
+  postgres:
+    image: postgres:16-alpine
+    container_name: stall-postgres
+    environment:
+      POSTGRES_DB: exam_2400090250
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: 2007@Rshu
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  eureka:
+    build:
+      context: ./backend/EurekaService
+      dockerfile: Dockerfile
+    container_name: stall-eureka
+    ports:
+      - "8761:8761"
+
+  backend:
+    build:
+      context: ./backend/CrudServiceProject
+      dockerfile: Dockerfile
+    container_name: stall-backend
+    depends_on:
+      - postgres
+      - eureka
+    environment:
+      PORT: 8081
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgres:5432/exam_2400090250
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: 2007@Rshu
+      EUREKA_CLIENT_SERVICE_URL_DEFAULTZONE: http://eureka:8761/eureka/
+    ports:
+      - "8082:8081"
+
+  frontend:
+    build:
+      context: ./frontend/frontend
+      dockerfile: Dockerfile
+    container_name: stall-frontend
+    depends_on:
+      - backend
+    ports:
+      - "3000:80"
+
+volumes:
+  postgres_data:

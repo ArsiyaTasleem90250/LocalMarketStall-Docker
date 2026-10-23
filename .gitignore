@@ -1,0 +1,5 @@
+.metadata/
+**/target/
+**/node_modules/
+**/dist/
+.env
