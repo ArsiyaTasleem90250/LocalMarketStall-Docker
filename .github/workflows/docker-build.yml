@@ -25,11 +25,11 @@ jobs:
         with:
           context: ./backend/CrudServiceProject
           push: true
-          tags: ArsiyaTasleem90250/localmarket-backend:latest
+          tags: arsiyatasleem90250/localmarket-backend:latest
 
       - name: Build and Push Frontend
         uses: docker/build-push-action@v6
         with:
           context: ./frontend/frontend
           push: true
-          tags: ArsiyaTasleem90250/localmarket-frontend:latest
+          tags: arsiyatasleem90250/localmarket-frontend:latest
